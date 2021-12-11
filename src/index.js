@@ -1,6 +1,6 @@
 import './css/styles.css';
 import imageCardTpl from './templates/image-card.hbs';
-import API  from './fetchImages';
+import ImageApiService  from './fetchImages';
 import Notiflix from 'notiflix';
 import debounce from 'lodash.debounce';
 
@@ -11,20 +11,27 @@ const photoCard = document.querySelector(".photo-card");
 const btnSearch = document.querySelector(".btn-search");
 const btnLoadMore = document.querySelector(".load-more");
 
+const imageApiService = new ImageApiService();
+
+searchForm.addEventListener('submit', debounce(onImageSearch, DEBOUNCE_DELAY));
+btnLoadMore.addEventListener('click', loadMoreImages);
 
 
-searchForm.addEventListener('submit', debounce(imageSearchInputHandler, DEBOUNCE_DELAY));
-
-function imageSearchInputHandler(e) {
+function onImageSearch(e) {
 e.preventDefault();
     
-const image = e.currentTarget.elements.query.value.trim();
-
-API.fetchImages(image)
-.then(renderImageCard)
-// .catch(onFetchError) 
+imageApiService.query = e.currentTarget.elements.query.value;
+    imageApiService.fetchImages();
 }
   
+function loadMoreImages () {
+imageApiService.fetchImages();
+}
+
+
+
+
+
 // function onFetchError(error) {
 //     if (error) {countryList.innerHTML = '';
 //         Notiflix.Notify.failure('Oops, there is no country with that name')
@@ -32,13 +39,7 @@ API.fetchImages(image)
 // }
 
 
-function renderImageCard(image) {
-const markup = imageCardTpl(image);
-imageCardTpl.innerHTML = markup;
-}
-
-
-
-
-
-    
+// function renderImageCard(image) {
+// const markup = imageCardTpl(image);
+// imageCardTpl.innerHTML = markup;
+// }
