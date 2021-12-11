@@ -1,45 +1,47 @@
 import './css/styles.css';
-import imageCardTpl from './templates/image-card.hbs';
-import ImageApiService  from './fetchImages';
+import photoCardTpl from './templates/photo-card.hbs';
+import PhotosApiService  from './fetchphotos';
 import Notiflix from 'notiflix';
-import debounce from 'lodash.debounce';
 
-const DEBOUNCE_DELAY = 300;
+
+
 const searchForm = document.querySelector(".search-form");
 const gallery = document.querySelector(".gallery");
 const photoCard = document.querySelector(".photo-card");
 const btnSearch = document.querySelector(".btn-search");
 const btnLoadMore = document.querySelector(".load-more");
 
-const imageApiService = new ImageApiService();
+const photosApiService = new PhotosApiService();
 
-searchForm.addEventListener('submit', debounce(onImageSearch, DEBOUNCE_DELAY));
-btnLoadMore.addEventListener('click', loadMoreImages);
+searchForm.addEventListener('submit', onPhotoSearch);
+btnLoadMore.addEventListener('click', loadMorePhotos);
 
 
-function onImageSearch(e) {
+function onPhotoSearch(e) {
 e.preventDefault();
     
-imageApiService.query = e.currentTarget.elements.query.value;
-    imageApiService.fetchImages();
+    photosApiService.query = e.currentTarget.query.value;
+    if (photosApiService.query === '') {
+        gallery.innerHTML = '';
+        return Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.")
+    }
+    
+    photosApiService.resetPage();
+    photosApiService.fetchPhotos().then(photos => {
+        clearGallery();
+        appendPhotoCard(photos);
+    });
 }
   
-function loadMoreImages () {
-imageApiService.fetchImages();
+function loadMorePhotos() {
+photosApiService.fetchPhotos().then(appendPhotoCard);
 }
 
 
+function appendPhotoCard(photo) {
+    gallery.insertAdjacentHTML('beforeend', photoCardTpl(photo))
+}
 
-
-
-// function onFetchError(error) {
-//     if (error) {countryList.innerHTML = '';
-//         Notiflix.Notify.failure('Oops, there is no country with that name')
-//     }
-// }
-
-
-// function renderImageCard(image) {
-// const markup = imageCardTpl(image);
-// imageCardTpl.innerHTML = markup;
-// }
+function clearGallery() {
+    gallery.innerHTML = '';
+}
