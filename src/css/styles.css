@@ -26,3 +26,9 @@ body {
   opacity: 1;
   background-color: rgb(11, 18, 149);
 }
+
+.gallery {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

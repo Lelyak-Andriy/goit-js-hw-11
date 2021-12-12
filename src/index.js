@@ -1,47 +1,61 @@
 import './css/styles.css';
-import photoCardTpl from './templates/photo-card.hbs';
-import PhotosApiService  from './fetchphotos';
-import Notiflix from 'notiflix';
-
-
+import galleryItem from './templates/galleryList.hbs';
+import apiService from './fetchPhotos';
+// import Notiflix from 'notiflix';
 
 const searchForm = document.querySelector(".search-form");
-const gallery = document.querySelector(".gallery");
-const photoCard = document.querySelector(".photo-card");
-const btnSearch = document.querySelector(".btn-search");
+const galleryList = document.querySelector(".gallery");
 const btnLoadMore = document.querySelector(".load-more");
 
-const photosApiService = new PhotosApiService();
-
-searchForm.addEventListener('submit', onPhotoSearch);
-btnLoadMore.addEventListener('click', loadMorePhotos);
+searchForm.addEventListener('submit', onSubmit);
+btnLoadMore.addEventListener('click', onLoadMore);
 
 
-function onPhotoSearch(e) {
-e.preventDefault();
+function onSubmit(e) {
+    e.preventDefault();
     
-    photosApiService.query = e.currentTarget.query.value;
-    if (photosApiService.query === '') {
-        gallery.innerHTML = '';
-        return Notiflix.Notify.warning("Sorry, there are no images matching your search query. Please try again.")
+    apiService.query = e.currentTarget.elements.searchQuery.value;
+    if (apiService.query === "") {
+        galleryList.innerHTML = '';  
     }
-    
-    photosApiService.resetPage();
-    photosApiService.fetchPhotos().then(photos => {
-        clearGallery();
-        appendPhotoCard(photos);
-    });
-}
-  
-function loadMorePhotos() {
-photosApiService.fetchPhotos().then(appendPhotoCard);
+        
+    // apiService.resetPage();
+    apiService.fetchPhotos().then(photos =>{});
 }
 
+ 
+
+function onLoadMore() {
+apiService.fetchPhotos().then(appendPhotoCard);
+}
 
 function appendPhotoCard(photo) {
-    gallery.insertAdjacentHTML('beforeend', photoCardTpl(photo))
+    galleryList.insertAdjacentHTML('beforeend', galleryItem(photo.hits))
 }
 
-function clearGallery() {
-    gallery.innerHTML = '';
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// function clearGallery() {
+//     galleryList.innerHTML = '';
+// }
+
+
+
+// API.resetPage();
+    // API.fetchPhotos().then(photos => {
+    //     clearGallery();
+    //     appendPhotoCard(photos);
+    // });
