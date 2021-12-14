@@ -30,5 +30,15 @@ body {
 .gallery {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: center; 
+}
+
+.info{
+  display: flex;
+  justify-content: baseline;
+  align-items: center; 
+}
+
+.load-more.is-hidden {
+display: none;
 }
