@@ -39,6 +39,6 @@ body {
   align-items: center; 
 }
 
-.load-more.is-hidden {
+.is-hidden {
 display: none;
 }
