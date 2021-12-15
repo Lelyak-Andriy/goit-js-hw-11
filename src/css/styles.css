@@ -42,3 +42,13 @@ body {
 .is-hidden {
 display: none;
 }
+
+.load {
+  display: flex;
+  justify-content: center;
+}
+
+.load-more {
+  margin-left: auto;
+  margin-right: auto;
+}
