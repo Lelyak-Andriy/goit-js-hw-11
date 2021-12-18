@@ -1,7 +1,8 @@
+import axios from "axios";
 export default {
-    
+   
     apiKey: '24769515-7151fb4d93d5940551af86767',
-    baseUrl: 'https://pixabay.com/api/',
+    baseUrl: 'https://pixabay.com/api',
     searchQuery: '',
     perPage: 40,
     page: 1,
@@ -10,13 +11,19 @@ export default {
     safesearch: true,
 
     fetchPhotos() {
-        const url = `${this.baseUrl}?q=${this.query}&image_type=photo&orientation=horizontal&per_page=${this.perPage}&page=${this.page}&key=${this.apiKey}`;
+        const url = `${this.baseUrl}/?q=${this.query}&image_type=photo&orientation=horizontal&per_page=${this.perPage}&page=${this.page}&key=${this.apiKey}`;
         return fetch(url)
             .then(response => {
                 this.incrementPage();
                 return response.json();
             })
     },
+
+//     async fetchPhotos() {
+//     const response = await fetch(`${this.baseUrl}/?q=${this.query}&image_type=photo&orientation=horizontal&per_page=${this.perPage}&page=${this.page}&key=${this.apiKey}`);
+//     const photos = await response.json();
+//     return photos
+// }
 
     resetPage() {
         this.page = 1;

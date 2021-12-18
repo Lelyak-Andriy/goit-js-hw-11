@@ -52,6 +52,11 @@ apiService.fetchPhotos()
     }
     showButton()
     enableButton()
+
+    if (photos.hits.length < 40 && photos.hits.length > 0) {
+        hideButton()
+        disableButton()
+    }
 })
 .catch(error => console.log(error))
 .finally(() => {})
