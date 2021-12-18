@@ -1,6 +1,6 @@
 import './css/styles.css';
 import galleryItem from './templates/galleryList.hbs';
-import apiService from './fetchPhotos';
+import apiService from './templates/fetchPhotos';
 import Notiflix from 'notiflix';
 
 
