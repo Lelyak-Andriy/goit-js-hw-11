@@ -3,7 +3,7 @@ export default {
     apiKey: '24769515-7151fb4d93d5940551af86767',
     baseUrl: 'https://pixabay.com/api/',
     searchQuery: '',
-    perPage: 4,
+    perPage: 40,
     page: 1,
     image_type: "photo",
     orientation: "horizontal",

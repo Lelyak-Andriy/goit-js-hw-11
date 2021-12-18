@@ -8,9 +8,6 @@ const searchForm = document.querySelector(".search-form");
 const galleryList = document.querySelector(".gallery");
 const btnLoadMore = document.querySelector(".load-more");
 
-
-console.log(btnLoadMore);
-
 searchForm.addEventListener('submit', onSubmit);
 btnLoadMore.addEventListener('click', fetchPhotos);
 
@@ -33,27 +30,31 @@ function onSubmit(e) {
     clearGallery();
     apiService.resetPage();
     fetchPhotos();
-    // apiService.fetchPhotos().then(photos => {
-    //     clearGallery();
-    //     appendPhotoCard(photos)
-    // });
 }
-//  до фетча все списав, продовжувати з функції фетч
+
 
 
 function fetchPhotos() {
-    // hideButton();
-    // disableButton();
-    apiService.fetchPhotos()
+    hideButton();
+    disableButton();
+
+apiService.fetchPhotos()
 .then(photos => {
             appendPhotoCard(photos);
-        
+    if (photos.totalHits === 0) {
+        Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.")
+    }
+    if (apiService.page === 2) {
+        Notiflix.Notify.info(`Hooray! We found ${photos.totalHits} images.`)
+    }
+    if (((apiService.page - 1) * apiService.perPage) >= photos.totalHits) {
+        Notiflix.Notify.warning("We're sorry, but you've reached the end of search results.")
+    }
+    showButton()
+    enableButton()
 })
 .catch(error => console.log(error))
-.finally(() => {
-        // enableButton()
-        // showButton()
-})
+.finally(() => {})
 }
 
 

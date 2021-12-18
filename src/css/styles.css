@@ -17,17 +17,16 @@ body {
   height: 100px;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-end;
   flex-direction: row;
   margin: 0 auto;
-  padding-top: 20px;
-  padding-bottom: 20px;
-  position: relative;
+  padding-bottom: 40px;
   opacity: 1;
   background-color: rgb(11, 18, 149);
 }
 
 .gallery {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center; 
@@ -51,4 +50,9 @@ display: none;
 .load-more {
   margin-left: auto;
   margin-right: auto;
+}
+
+.photo-card {
+  border: 1px solid black;
+  margin-right: 5px;
 }
