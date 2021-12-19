@@ -19,12 +19,6 @@ export default {
             })
     },
 
-//     async fetchPhotos() {
-//     const response = await fetch(`${this.baseUrl}/?q=${this.query}&image_type=photo&orientation=horizontal&per_page=${this.perPage}&page=${this.page}&key=${this.apiKey}`);
-//     const photos = await response.json();
-//     return photos
-// }
-
     resetPage() {
         this.page = 1;
     },
